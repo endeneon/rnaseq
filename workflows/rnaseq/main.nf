@@ -17,11 +17,13 @@ include { RUSTQC                              } from '../../modules/nf-core/rust
 //
 include { ALIGN_STAR                            } from '../../subworkflows/local/align_star'
 include { ALIGN_BOWTIE2                         } from '../../subworkflows/local/align_bowtie2'
-include { BAM_POST_ALIGNMENT_QC                 } from '../../subworkflows/local/bam_post_alignment_qc'
+include { BAM_QC_RNASEQ                         } from '../../subworkflows/nf-core/bam_qc_rnaseq'
 include { QUANTIFY_RSEM                         } from '../../subworkflows/nf-core/quantify_rsem'
 include { BAM_DEDUP_UMI                         } from '../../subworkflows/nf-core/bam_dedup_umi'
 
 include { checkSamplesAfterGrouping      } from '../../subworkflows/local/utils_nfcore_rnaseq_pipeline'
+include { defineQcTools                  } from '../../subworkflows/local/utils_nfcore_rnaseq_pipeline'
+include { biotypeInGtf                   } from '../../subworkflows/local/utils_nfcore_rnaseq_pipeline'
 include { multiqcTsvFromList             } from '../../subworkflows/nf-core/fastq_qc_trim_filter_setstrandedness'
 include { getInferexperimentStrandedness } from '../../subworkflows/local/utils_nfcore_rnaseq_pipeline'
 include { methodsDescriptionText         } from '../../subworkflows/local/utils_nfcore_rnaseq_pipeline'
@@ -500,9 +502,14 @@ workflow RNASEQ {
     // Pre-compute param-derived values for QC subworkflow
     //
     def biotype = params.gencode ? "gene_type" : params.featurecounts_group_type
-    def rseqc_modules = params.rseqc_modules ? params.rseqc_modules.split(',').collect{ module -> module.trim().toLowerCase() } : []
-    if (params.bam_csi_index) {
-        rseqc_modules.removeAll(['read_distribution', 'inner_distance', 'tin'])
+    def qc_tools = defineQcTools(params)
+
+    // Validate biotype attribute exists in GTF; clear it if not found
+    // (prevents featureCounts running with an invalid grouping attribute)
+    ch_biotype = ch_gtf.map { gtf ->
+        (biotype && 'biotype_qc' in qc_tools)
+            ? (biotypeInGtf(gtf, biotype) ? biotype : '')
+            : biotype
     }
 
     ch_inferexperiment_txt = channel.empty()
@@ -544,33 +551,26 @@ workflow RNASEQ {
                 .filter { it != null }
         } else {
             //
-            // SUBWORKFLOW: Post-alignment QC (upstream tools)
+            // SUBWORKFLOW: Post-alignment QC
             //
-            BAM_POST_ALIGNMENT_QC (
-                ch_genome_bam,
-                ch_genome_bam_index,
-                ch_gtf,
+            BAM_QC_RNASEQ (
+                ch_genome_bam.join(ch_genome_bam_index, by: [0]),
+                ch_gtf.map { gtf -> [ [:], gtf ] },
                 ch_gene_bed,
                 ch_fasta_fai,
-                ch_biotypes_header_multiqc,
-                params.skip_preseq,
-                params.skip_biotype_qc,
-                params.skip_qualimap,
-                params.skip_dupradar,
-                params.skip_rseqc,
-                biotype,
-                rseqc_modules
+                channel.of([ [:], ch_biotypes_header_multiqc ]),
+                qc_tools,
+                ch_biotype
             )
-            ch_multiqc_files = ch_multiqc_files.mix(BAM_POST_ALIGNMENT_QC.out.multiqc_files)
-            ch_inferexperiment_txt = BAM_POST_ALIGNMENT_QC.out.inferexperiment_txt
-            ch_versions = ch_versions.mix(BAM_POST_ALIGNMENT_QC.out.versions)
+            ch_multiqc_files = ch_multiqc_files.mix(BAM_QC_RNASEQ.out.multiqc_files)
+            ch_inferexperiment_txt = BAM_QC_RNASEQ.out.inferexperiment_txt
         }
 
         //
         // Strandedness comparison using infer_experiment output
         //
         // RustQC always produces infer_experiment output regardless of rseqc_modules
-        def run_infer_experiment = params.use_rustqc || rseqc_modules.contains('infer_experiment')
+        def run_infer_experiment = params.use_rustqc || 'rseqc_infer_experiment' in qc_tools
         if (run_infer_experiment) {
 
             // Compare predicted supplied or Salmon-predicted strand with what we get from RSeQC

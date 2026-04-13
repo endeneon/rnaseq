@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [PR #1781](https://github.com/nf-core/rnaseq/pull/1781) - Bump version to 3.25.0dev after release 3.24.0; fix SortMeRNA `%rRNA` appearing only under "Read 2" in MultiQC General Stats by using log filename for sample names instead of parsing paired-end read paths from log content
 - [PR #1784](https://github.com/nf-core/rnaseq/pull/1784) - Replace local `gtf2bed` module with nf-core `ea-utils/gtf2bed` module
+- [PR #1785](https://github.com/nf-core/rnaseq/pull/1785) - Replace local `bam_post_alignment_qc` subworkflow and `multiqc_custom_biotype` module with nf-core/modules `bam_qc_rnaseq` subworkflow; switch from skip flags to a tools list with `.filter()`-based channel gating
 
 ## [[3.24.0](https://github.com/nf-core/rnaseq/releases/tag/3.24.0)] - 2026-04-09
 

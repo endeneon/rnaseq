@@ -49,8 +49,8 @@
                 "GUNZIP_GTF": {
                     "gunzip": 1.13
                 },
-                "MULTIQC_CUSTOM_BIOTYPE": {
-                    "python": "3.9.5"
+                "CUSTOM_MULTIQCCUSTOMBIOTYPE": {
+                    "python": "3.12.2"
                 },
                 "PICARD_MARKDUPLICATES": {
                     "picard": "3.4.0"

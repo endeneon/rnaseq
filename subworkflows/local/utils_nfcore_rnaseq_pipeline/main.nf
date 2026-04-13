@@ -683,6 +683,32 @@ def checkMaxContigSize(fai_file) {
 }
 
 //
+// Build list of QC tools to run from pipeline params
+//
+def defineQcTools(params) {
+    def tools = []
+
+    if (!params.skip_qc) {
+        if (!params.skip_preseq)    { tools << 'preseq' }
+        if (!params.skip_biotype_qc){ tools << 'biotype_qc' }
+        if (!params.skip_qualimap)  { tools << 'qualimap' }
+        if (!params.skip_dupradar)  { tools << 'dupradar' }
+
+        if (!params.skip_rseqc) {
+            def rseqc_modules = params.rseqc_modules
+                ? params.rseqc_modules.split(',').collect { it.trim().toLowerCase() }
+                : []
+            if (params.bam_csi_index) {
+                rseqc_modules.removeAll(['read_distribution', 'inner_distance', 'tin'])
+            }
+            rseqc_modules.each { tools << "rseqc_${it}" }
+        }
+    }
+
+    return tools
+}
+
+//
 // Function to check whether biotype field exists in GTF file
 //
 def biotypeInGtf(gtf_file, biotype) {
