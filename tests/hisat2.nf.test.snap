@@ -117,6 +117,9 @@
                 "CUSTOM_GTFFILTER": {
                     "python": "3.9.5"
                 },
+                "CUSTOM_MULTIQCCUSTOMBIOTYPE": {
+                    "python": "3.12.2"
+                },
                 "CUSTOM_TX2GENE": {
                     "python": "3.10.4"
                 },
@@ -160,9 +163,6 @@
                 },
                 "HISAT2_EXTRACTSPLICESITES": {
                     "hisat2": "2.2.1"
-                },
-                "CUSTOM_MULTIQCCUSTOMBIOTYPE": {
-                    "python": "3.12.2"
                 },
                 "PICARD_MARKDUPLICATES": {
                     "picard": "3.4.0"
