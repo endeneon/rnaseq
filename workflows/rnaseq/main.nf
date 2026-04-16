@@ -792,18 +792,24 @@ workflow RNASEQ {
             .mix(ch_collated_versions.map  { file -> [[:], file] })
             .mix(ch_methods_description.map{ file -> [[:], file] })
 
-        // Provide MultiQC with rename patterns to ensure it uses sample names
-        // for single-techrep samples not processed by CAT_FASTQ.
-        //
-        // We only add mappings when the FASTQ simpleName differs from the sample ID.
-        // This prevents duplicate/conflicting mappings when multiple samples share
-        // the same FASTQ filename in different directories (see #1657).
-        //
-        // For paired-end samples we append '_R1' / '_R2' (not '_1' / '_2') so
-        // that MultiQC's table_sample_merge regex (which requires a literal
-        // 'R'/'r' letter) groups the two reads together in the General Stats
-        // table, while sample IDs that naturally end with '_1' / '_2' pass
+        // Provide MultiQC with rename patterns so paired-end reads are
+        // recognised as '_R1' / '_R2' instead of '_1' / '_2'. This lets
+        // MultiQC's table_sample_merge regex (which requires a literal
+        // 'R'/'r' letter) group the two reads in the General Stats table,
+        // while samplesheet IDs that naturally end with '_1' / '_2' pass
         // through untouched and don't get incorrectly collapsed.
+        //
+        // Two classes of mappings are emitted:
+        //   1. The original FASTQ simpleName (e.g. 'SRR123_1') → '<id>_R1'
+        //      — catches tools whose outputs keep the input FASTQ basename
+        //      (see #1657). We only add this when the simpleName differs
+        //      from the sample ID, to avoid conflicting mappings for
+        //      samples that share FASTQ filenames across directories.
+        //   2. For paired-end samples, '<id>_1' → '<id>_R1' and
+        //      '<id>_2' → '<id>_R2' — catches tools like FastQC whose
+        //      nf-core module renames inputs to '<prefix>_1.fastq.gz' /
+        //      '<prefix>_2.fastq.gz' so MultiQC's cleaned sample name
+        //      comes out as '<id>_1' / '<id>_2'.
         //
         // Note: _raw/_trimmed suffixes are handled via extra_fn_clean_exts in multiqc_config.yml
         ch_name_replacements = ch_fastq
@@ -818,6 +824,11 @@ workflow RNASEQ {
                     if (paired) {
                         mappings << [file(reads[0][1]).simpleName, "${meta.id}${suffixes[1]}"]
                     }
+                }
+
+                if (paired) {
+                    mappings << ["${meta.id}_1", "${meta.id}_R1"]
+                    mappings << ["${meta.id}_2", "${meta.id}_R2"]
                 }
 
                 return mappings.collect { mapping -> mapping.join('\t') }
