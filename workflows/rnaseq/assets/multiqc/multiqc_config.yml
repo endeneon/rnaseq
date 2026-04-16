@@ -93,18 +93,23 @@ sample_names_replace_exact: true
 use_filename_as_sample_name:
   - sortmerna
 
-# Group paired-end reads together in the general stats table
+# Group paired-end reads together in the general stats table.
+#
+# Only match suffixes that unambiguously indicate a read-pair (i.e. require a
+# literal 'R'/'r' letter). Plain '_1'/'_2' is excluded on purpose so that
+# samplesheets containing sample IDs like 'foo_1' and 'foo_2' aren't
+# incorrectly collapsed into a single row. The pipeline renames per-read
+# inputs to '<sample>_R1' / '<sample>_R2' in workflows/rnaseq/main.nf so
+# that FastQC and friends still group correctly through this config.
 table_sample_merge:
   "Read 1":
-    - "_1"
     - "_R1"
     - type: regex
-      pattern: "[_.-][rR]?1$"
+      pattern: "[_.-][rR]1$"
   "Read 2":
-    - "_2"
     - "_R2"
     - type: regex
-      pattern: "[_.-][rR]?2$"
+      pattern: "[_.-][rR]2$"
 
 # Run only these modules
 run_modules:

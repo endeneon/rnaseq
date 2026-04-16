@@ -767,6 +767,9 @@ workflow RNASEQ {
         def mqc_custom_config  = params.multiqc_config ? file(params.multiqc_config, checkIfExists: true) : []
         def mqc_logo           = params.multiqc_logo   ? file(params.multiqc_logo, checkIfExists: true)   : []
 
+        // Build the MultiQC config list (default + optional custom)
+        def mqc_config_files = mqc_custom_config ? [mqc_default_config, mqc_custom_config] : [mqc_default_config]
+
         // Prepare the workflow summary
         ch_workflow_summary = channel.value(
             paramsSummaryMultiqc(
@@ -796,11 +799,17 @@ workflow RNASEQ {
         // This prevents duplicate/conflicting mappings when multiple samples share
         // the same FASTQ filename in different directories (see #1657).
         //
+        // For paired-end samples we append '_R1' / '_R2' (not '_1' / '_2') so
+        // that MultiQC's table_sample_merge regex (which requires a literal
+        // 'R'/'r' letter) groups the two reads together in the General Stats
+        // table, while sample IDs that naturally end with '_1' / '_2' pass
+        // through untouched and don't get incorrectly collapsed.
+        //
         // Note: _raw/_trimmed suffixes are handled via extra_fn_clean_exts in multiqc_config.yml
         ch_name_replacements = ch_fastq
             .map{ meta, reads ->
                 def paired = reads[0][1] as boolean
-                def suffixes = paired ? ['_1', '_2'] : ['']
+                def suffixes = paired ? ['_R1', '_R2'] : ['']
                 def mappings = []
 
                 def fastq1_simplename = file(reads[0][0]).simpleName
@@ -816,9 +825,6 @@ workflow RNASEQ {
             .flatten()
             .collectFile(name: 'name_replacement.txt', newLine: true)
             .ifEmpty([])
-
-        // Build the MultiQC config list (default + optional custom)
-        def mqc_config_files = mqc_custom_config ? [mqc_default_config, mqc_custom_config] : [mqc_default_config]
 
         if (params.skip_quantification_merge) {
             //
