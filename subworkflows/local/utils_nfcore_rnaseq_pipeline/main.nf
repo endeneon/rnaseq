@@ -924,7 +924,7 @@ def perSampleMultiqcExpectedCount(params, meta, qc_tools, rseqc_modules, trim_pa
         if (params.use_rustqc) {
             n += 1
         } else {
-            n += bamQcRnaseqContribCount(qc_tools, rseqc_modules)
+            n += bamQcRnaseqContribCount(qc_tools, rseqc_modules, single_end)
         }
     }
 
@@ -1010,13 +1010,15 @@ def fastqQcTrimStrandednessContribCount(params, single_end, trim_pass) {
 // matching the subworkflow's internal tool-gating at
 // subworkflows/nf-core/bam_qc_rnaseq/main.nf.
 //
-def bamQcRnaseqContribCount(qc_tools, rseqc_modules) {
+def bamQcRnaseqContribCount(qc_tools, rseqc_modules, single_end) {
     def n = 0
     if (qc_tools?.contains('preseq'))     n += 1
     if (qc_tools?.contains('biotype_qc')) n += 1
     if (qc_tools?.contains('qualimap'))   n += 1
     if (qc_tools?.contains('dupradar'))   n += 1
-    n += (rseqc_modules?.size() ?: 0)
+    // inner_distance is paired-end only; RSeQC's inner_distance.py skips SE inputs.
+    def effective_rseqc = rseqc_modules?.findAll { single_end ? it != 'inner_distance' : true } ?: []
+    n += effective_rseqc.size()
     return n
 }
 
