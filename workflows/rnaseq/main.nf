@@ -528,7 +528,7 @@ workflow RNASEQ {
                     .join(RUSTQC.out.qualimap)
                     .map { meta, dup, fc, pre, sam, rse, qua ->
                         def files = [dup, fc, pre, sam, rse, qua]
-                            .collect { it instanceof List ? it : [it] }
+                            .collect { out -> out instanceof List ? out : [out] }
                             .flatten()
                             .findAll { f ->
                                 // Exclude gene-level featureCounts summary so MultiQC only sees the
@@ -784,16 +784,31 @@ workflow RNASEQ {
     // Per-sample expected MultiQC item count, used by MULTIQC_RNASEQ as a
     // groupKey so each sample's per-sample report can close as soon as its
     // expected files arrive. Anchored on ch_fastq (fastq-branch samples);
-    // bam-branch pre-aligned inputs are not in scope for per-sample grouping.
-    def rseqc_modules_list = qc_tools.findAll { it.startsWith('rseqc_') }.collect { it.replace('rseqc_', '') }
+    // bam-branch pre-aligned inputs (skip_alignment=true with genome_bam in the
+    // samplesheet) are filtered out via the `meta == null` guard — they still
+    // contribute to the merged MultiQC report but don't get per-sample grouping
+    // because their meta doesn't flow through FASTQ_QC_TRIM_FILTER_SETSTRANDEDNESS.
+    def rseqc_modules_list = qc_tools.findAll { tool -> tool.startsWith('rseqc_') }.collect { tool -> tool.replace('rseqc_', '') }
     ch_expected_multiqc_count = ch_fastq
         .map { meta, _reads -> [meta.id, meta] }
         .join(ch_trim_status, remainder: true)
         .join(ch_map_status,  remainder: true)
-        .map { id, meta, trim_pass, map_pass ->
+        .map { row ->
+            // Tuple size varies with the join-remainder padding: 4 elements when
+            // all three sources had the sample (id, meta, trim_pass, map_pass);
+            // fewer when ch_fastq didn't emit for this sample but ch_trim_status
+            // or ch_map_status did (bam-branch samples hit ch_map_status only).
+            def id = row[0]
+            def meta = row.size() > 1 ? row[1] : null
+            def trim_pass = row.size() > 2 ? row[2] : null
+            def map_pass = row.size() > 3 ? row[3] : null
+            if (meta == null) {
+                return null
+            }
             def n = perSampleMultiqcExpectedCount(params, meta, qc_tools, rseqc_modules_list, trim_pass, map_pass)
-            [id, groupKey(id, n), n]
+            return [id, groupKey(id, n), n]
         }
+        .filter { row -> row != null }
 
     if (!params.skip_multiqc) {
         MULTIQC_RNASEQ(
