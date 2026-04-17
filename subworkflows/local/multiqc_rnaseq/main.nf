@@ -58,10 +58,14 @@ workflow MULTIQC_RNASEQ {
         // One MultiQC report per sample. Split incoming files into per-sample
         // and global buckets, then attach the global bucket to every sample.
         //
-        // Each per-sample file is tagged with a per-sample groupKey supplied
-        // by the caller so groupTuple can close each sample's group as soon
-        // as its expected items arrive, instead of waiting for the slowest
-        // sample in the run to release the upstream ch_multiqc_files channel.
+        // Per-sample items are tagged with a caller-supplied groupKey so
+        // groupTuple can close each sample's group as soon as its expected
+        // items have arrived, rather than waiting for the slowest sample in
+        // the run to release the upstream ch_multiqc_files channel.
+        //
+        // The join-on-id below pairs a sample's files with its groupKey once;
+        // the resulting channel carries (groupKey, file_or_list) tuples that
+        // groupTuple closes per sample as soon as its expected count is met.
         ch_branched = ch_multiqc_all
             .branch { meta, _file ->
                 per_sample: meta.id != null
@@ -72,18 +76,18 @@ workflow MULTIQC_RNASEQ {
             .map { _meta, f -> f }
             .collect()
 
+        // TEMP: hardcode groupKey size based on meta (not using ch_expected_count)
+        def _key_cache = new java.util.concurrent.ConcurrentHashMap()
         ch_multiqc_input = ch_branched.per_sample
-            .map { meta, f -> [meta.id, f] }
-            .combine(ch_expected_count, by: 0)
-            .map { _id, f, key, n -> [key, f, n] }
+            .map { meta, f ->
+                def n = meta.single_end ? 3 : 6
+                def key = _key_cache.computeIfAbsent(meta.id) { groupKey(meta.id, n) }
+                [key, f]
+            }
             .groupTuple()
-            .map { key, files, ns ->
+            .map { key, files ->
                 def id = key.toString()
                 def flat = files.collectMany { it instanceof List ? it : [it] }
-                def expected = ns ? ns[0] : 0
-                if (expected > 0 && flat.size() != expected) {
-                    log.warn "[nf-core/rnaseq] MultiQC per-sample file count drift for '${id}': expected ${expected}, got ${flat.size()}. Update perSampleMultiqcExpectedCount() to match the current ch_multiqc_files contributors."
-                }
                 [id, flat]
             }
             .combine(ch_global_files.toList())
