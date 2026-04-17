@@ -72,27 +72,12 @@ workflow MULTIQC_RNASEQ {
             .map { _meta, f -> f }
             .collect()
 
-        // Build a single value-channel lookup map from id -> [groupKey, expected_count].
-        // Using a value channel avoids the Cartesian-broadcast behaviour we saw with
-        // `.combine(by:)` on queue-to-queue, which duplicated left-side items per
-        // subscriber.
-        ch_expected_count_map = ch_expected_count
-            .map { id, key, n -> [(id): [key, n]] }
-            .reduce([:]) { acc, entry -> acc + entry }
-
         ch_multiqc_input = ch_branched.per_sample
-            .combine(ch_expected_count_map)
-            .map { meta, f, count_map ->
-                def entry = count_map[meta.id]
-                def key   = entry ? entry[0] : groupKey(meta.id, 0)
-                def n     = entry ? entry[1] : 0
-                [key, f, n]
-            }
+            .map { meta, f -> [meta.id, f] }
+            .combine(ch_expected_count, by: 0)
+            .map { _id, f, key, n -> [key, f, n] }
             .groupTuple()
             .map { key, files, ns ->
-                // Flatten because some upstream contributors emit bundled
-                // [meta, list_of_files] tuples (e.g. RUSTQC) and others emit
-                // [meta, single_file]; both forms land in the grouped list.
                 def id = key.toString()
                 def flat = files.collectMany { it instanceof List ? it : [it] }
                 def expected = ns ? ns[0] : 0
