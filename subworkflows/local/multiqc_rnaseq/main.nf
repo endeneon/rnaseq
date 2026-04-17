@@ -93,7 +93,7 @@ workflow MULTIQC_RNASEQ {
                 def n   = entry ? entry[1] : 0
                 [key, f, n]
             }
-            .groupTuple()
+            .groupTuple(remainder: true)
             .map { key, files, ns ->
                 def id = key.toString()
                 def flat = files.collectMany { it instanceof List ? it : [it] }
