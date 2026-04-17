@@ -42,37 +42,34 @@ workflow MULTIQC_RNASEQ {
         methodsDescriptionText(methods_description_yml)
     ).collectFile(name: 'methods_description_mqc.yaml')
 
-    // Everything MultiQC will ingest: the collected per-sample QC outputs
-    // plus the global context files, tagged with an empty meta.
-    ch_multiqc_all = ch_multiqc_files.mix(
-        ch_workflow_summary
-            .mix(ch_collated_versions)
-            .mix(ch_methods_description)
-            .map { f -> [[:], f] }
+    // Static globals (value channels, ready immediately) kept separate from the
+    // collated-versions channel so the per-sample branch can bypass the latter.
+    // ch_collated_versions only closes after every task has emitted via the
+    // `versions` topic, which would otherwise block per-sample MultiQC until the
+    // slowest sample finishes — undermining the groupKey-driven progressive
+    // closure below. Merged mode still waits on the full set.
+    ch_static_globals = ch_workflow_summary
+        .mix(ch_methods_description)
+        .map { f -> [[:], f] }
+
+    ch_multiqc_all = ch_multiqc_files.mix(ch_static_globals).mix(
+        ch_collated_versions.map { f -> [[:], f] }
     )
 
     // --replace-names TSV so MultiQC uses sample IDs rather than FASTQ basenames.
     ch_name_replacements = multiqcNameReplacements(ch_fastq)
 
     if (skip_quantification_merge) {
-        // One MultiQC report per sample. Split incoming files into per-sample
-        // and global buckets, then attach the global bucket to every sample.
-        //
-        // Per-sample items are tagged with a caller-supplied groupKey so
-        // groupTuple can close each sample's group as soon as its expected
-        // items have arrived, rather than waiting for the slowest sample in
-        // the run to release the upstream ch_multiqc_files channel.
-        //
-        // The join-on-id below pairs a sample's files with its groupKey once;
-        // the resulting channel carries (groupKey, file_or_list) tuples that
-        // groupTuple closes per sample as soon as its expected count is met.
-        ch_branched = ch_multiqc_all
-            .branch { meta, _file ->
-                per_sample: meta.id != null
-                global: true
-            }
-
-        ch_global_files = ch_branched.global
+        // One MultiQC report per sample. Items carry a caller-supplied groupKey
+        // so groupTuple closes each sample as soon as its expected files arrive
+        // — combined with the versions-free globals pipeline above, each sample's
+        // report can fire ASAP rather than waiting for the slowest sample in the
+        // run. MultiQC still emits a multiqc_software_versions.txt from its own
+        // manifest (contents are .nftignored for per-sample reports).
+        ch_per_sample_items = ch_multiqc_files.filter { meta, _file -> meta.id != null }
+        ch_per_sample_globals = ch_multiqc_files
+            .filter { meta, _file -> meta.id == null }
+            .mix(ch_static_globals)
             .map { _meta, f -> f }
             .collect()
 
@@ -84,7 +81,7 @@ workflow MULTIQC_RNASEQ {
             .reduce([:]) { acc, entry -> acc + entry }
             .first()
 
-        ch_multiqc_input = ch_branched.per_sample
+        ch_multiqc_input = ch_per_sample_items
             .combine(ch_sample_keys)
             .map { meta, f, keys -> [keys[meta.id] ?: groupKey(meta.id, 0), f] }
             .groupTuple(remainder: true)
@@ -99,7 +96,7 @@ workflow MULTIQC_RNASEQ {
                 }
                 [id, files.flatten()]
             }
-            .combine(ch_global_files.toList())
+            .combine(ch_per_sample_globals.toList())
             .combine(ch_mqc_dynamic_config)
             .map { id, sample_files, global_files, dyn ->
                 [
