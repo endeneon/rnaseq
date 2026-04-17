@@ -528,7 +528,6 @@ workflow RNASEQ {
                     .join(RUSTQC.out.qualimap)
                     .map { meta, dup, fc, pre, sam, rse, qua ->
                         def files = [dup, fc, pre, sam, rse, qua]
-                            .collect { out -> out instanceof List ? out : [out] }
                             .flatten()
                             .findAll { f ->
                                 // Exclude gene-level featureCounts summary so MultiQC only sees the

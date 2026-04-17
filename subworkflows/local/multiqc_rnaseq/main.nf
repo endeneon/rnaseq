@@ -102,7 +102,7 @@ workflow MULTIQC_RNASEQ {
                 if (expected > 0 && files.size() != expected) {
                     log.warn "[nf-core/rnaseq] MultiQC per-sample contributor count drift for '${id}': expected ${expected}, got ${files.size()}. Update perSampleMultiqcExpectedCount() to match the current ch_multiqc_files contributors."
                 }
-                def flat = files.collectMany { item -> item instanceof List ? item : [item] }
+                def flat = files.flatten()
                 [id, flat]
             }
             .combine(ch_global_files.toList())
