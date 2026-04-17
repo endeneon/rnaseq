@@ -802,16 +802,24 @@ workflow RNASEQ {
         // Two classes of mappings are emitted:
         //   1. The original FASTQ simpleName (e.g. 'SRR123_1') → '<id>_R1'
         //      — catches tools whose outputs keep the input FASTQ basename
-        //      (see #1657). We only add this when the simpleName differs
+        //      (see #1341). We only add this when the simpleName differs
         //      from the sample ID, to avoid conflicting mappings for
-        //      samples that share FASTQ filenames across directories.
+        //      samples that share FASTQ filenames across directories
+        //      (see #1659).
         //   2. For paired-end samples, '<id>_1' → '<id>_R1' and
         //      '<id>_2' → '<id>_R2' — catches tools like FastQC whose
         //      nf-core module renames inputs to '<prefix>_1.fastq.gz' /
         //      '<prefix>_2.fastq.gz' so MultiQC's cleaned sample name
-        //      comes out as '<id>_1' / '<id>_2'.
+        //      comes out as '<id>_1' / '<id>_2'. Skipped when the
+        //      samplesheet contains another sample whose ID literally
+        //      equals '<id>_1' or '<id>_2', mirroring the #1659 guard:
+        //      without this check we'd also rename that unrelated
+        //      sample's rows.
         //
         // Note: _raw/_trimmed suffixes are handled via extra_fn_clean_exts in multiqc_config.yml
+        def mqc_all_sample_ids = samplesheetToList(params.input, "${projectDir}/assets/schema_input.json")
+            .collect { row -> row[0].id as String } as Set
+
         ch_name_replacements = ch_fastq
             .map{ meta, reads ->
                 def paired = reads[0][1] as boolean
@@ -827,8 +835,14 @@ workflow RNASEQ {
                 }
 
                 if (paired) {
-                    mappings << ["${meta.id}_1", "${meta.id}_R1"]
-                    mappings << ["${meta.id}_2", "${meta.id}_R2"]
+                    def pe_r1_src = "${meta.id}_1" as String
+                    def pe_r2_src = "${meta.id}_2" as String
+                    if (!mqc_all_sample_ids.contains(pe_r1_src)) {
+                        mappings << [pe_r1_src, "${meta.id}_R1"]
+                    }
+                    if (!mqc_all_sample_ids.contains(pe_r2_src)) {
+                        mappings << [pe_r2_src, "${meta.id}_R2"]
+                    }
                 }
 
                 return mappings.collect { mapping -> mapping.join('\t') }
