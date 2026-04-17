@@ -96,11 +96,14 @@ workflow MULTIQC_RNASEQ {
             .groupTuple(remainder: true)
             .map { key, files, ns ->
                 def id = key.toString()
-                def flat = files.collectMany { it instanceof List ? it : [it] }
+                // Compare against the pre-flatten tuple count because perSampleMultiqcExpectedCount
+                // predicts contributor tuples, while flat.size() reflects files (some contributors
+                // emit list-valued tuples e.g. DUPRADAR's multiqc output which bundles two _mqc.txt files).
                 def expected = ns ? ns[0] : 0
-                if (expected > 0 && flat.size() != expected) {
-                    log.warn "[nf-core/rnaseq] MultiQC per-sample file count drift for '${id}': expected ${expected}, got ${flat.size()}. Update perSampleMultiqcExpectedCount() to match the current ch_multiqc_files contributors."
+                if (expected > 0 && files.size() != expected) {
+                    log.warn "[nf-core/rnaseq] MultiQC per-sample contributor count drift for '${id}': expected ${expected}, got ${files.size()}. Update perSampleMultiqcExpectedCount() to match the current ch_multiqc_files contributors."
                 }
+                def flat = files.collectMany { it instanceof List ? it : [it] }
                 [id, flat]
             }
             .combine(ch_global_files.toList())
