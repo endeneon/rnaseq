@@ -51,8 +51,8 @@ workflow MULTIQC_RNASEQ {
     // so MultiQC still emits per-sample multiqc_software_versions.txt (content
     // .nftignored). Merged mode waits on the full collated versions.
     ch_static_versions = channel.value(
-        "Workflow:\n  ${workflow.manifest.name}: ${workflow.manifest.version}\n"
-    ).collectFile(name: 'rnaseq_per_sample_versions_mqc.yml')
+        "Workflow:\n    ${workflow.manifest.name}: ${workflow.manifest.version}\n    Nextflow: ${workflow.nextflow.version}\n"
+    ).collectFile(name: 'nf_core_rnaseq_software_mqc_versions.yml')
 
     ch_static_globals = ch_workflow_summary
         .mix(ch_methods_description)
