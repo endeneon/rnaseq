@@ -76,7 +76,6 @@ workflow MULTIQC_RNASEQ {
             .map { _meta, f -> f }
             .collect()
 
-        // TEMP: hardcode groupKey size based on meta (not using ch_expected_count)
         // Build a single value-channel lookup: id -> [groupKey, expected_count].
         // `.first()` converts to a value channel so combine broadcasts the lookup
         // to every per-sample emission.
