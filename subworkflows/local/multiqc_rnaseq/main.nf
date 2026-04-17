@@ -77,17 +77,30 @@ workflow MULTIQC_RNASEQ {
             .collect()
 
         // TEMP: hardcode groupKey size based on meta (not using ch_expected_count)
-        def _key_cache = new java.util.concurrent.ConcurrentHashMap()
+        // Build a single value-channel lookup: id -> [groupKey, expected_count].
+        // `.first()` converts to a value channel so combine broadcasts the lookup
+        // to every per-sample emission.
+        ch_sample_lookup = ch_expected_count
+            .map { id, key, n -> [(id): [key, n]] }
+            .reduce([:]) { acc, entry -> acc + entry }
+            .first()
+
         ch_multiqc_input = ch_branched.per_sample
-            .map { meta, f ->
-                def n = meta.single_end ? 3 : 6
-                def key = _key_cache.computeIfAbsent(meta.id) { groupKey(meta.id, n) }
-                [key, f]
+            .combine(ch_sample_lookup)
+            .map { meta, f, lookup ->
+                def entry = lookup[meta.id]
+                def key = entry ? entry[0] : groupKey(meta.id, 0)
+                def n   = entry ? entry[1] : 0
+                [key, f, n]
             }
             .groupTuple()
-            .map { key, files ->
+            .map { key, files, ns ->
                 def id = key.toString()
                 def flat = files.collectMany { it instanceof List ? it : [it] }
+                def expected = ns ? ns[0] : 0
+                if (expected > 0 && flat.size() != expected) {
+                    log.warn "[nf-core/rnaseq] MultiQC per-sample file count drift for '${id}': expected ${expected}, got ${flat.size()}. Update perSampleMultiqcExpectedCount() to match the current ch_multiqc_files contributors."
+                }
                 [id, flat]
             }
             .combine(ch_global_files.toList())
