@@ -67,11 +67,12 @@ workflow MULTIQC_RNASEQ {
         // run. MultiQC still emits a multiqc_software_versions.txt from its own
         // manifest (contents are .nftignored for per-sample reports).
         ch_per_sample_items = ch_multiqc_files.filter { meta, _file -> meta.id != null }
-        ch_per_sample_globals = ch_multiqc_files
-            .filter { meta, _file -> meta.id == null }
-            .mix(ch_static_globals)
-            .map { _meta, f -> f }
-            .collect()
+        // Static globals only — any channel that ultimately sources from
+        // ch_multiqc_files would block on the whole-run close here, defeating
+        // the progressive-closure goal. Dynamic globals (DESEQ2, fail_mapped,
+        // fail_strand_check) and the software-versions YAML are emitted into the
+        // merged report pipeline (else branch) but skipped per-sample.
+        ch_per_sample_globals = ch_static_globals.map { _meta, f -> f }.collect()
 
         // Value-channel map of id -> groupKey(id, expected_count). `.first()`
         // converts the reduced map to a value channel so combine broadcasts
