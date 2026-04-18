@@ -1,0 +1,62 @@
+Changes in component 'nf-core/fq/lint'
+'modules/nf-core/fq/lint/environment.yml' is unchanged
+'modules/nf-core/fq/lint/meta.yml' is unchanged
+Changes in 'fq/lint/main.nf':
+--- modules/nf-core/fq/lint/main.nf
++++ modules/nf-core/fq/lint/main.nf
+@@ -8,7 +8,7 @@
+         'biocontainers/fq:0.12.0--h9ee0642_0' }"
+ 
+     input:
+-    tuple val(meta), path(fastq)
++    tuple val(meta), path(fastq, arity: '1..2')
+ 
+     output:
+     tuple val(meta), path("*.fq_lint.txt"), emit: lint
+@@ -23,7 +23,7 @@
+     """
+     fq lint \\
+         $args \\
+-        $fastq > ${prefix}.fq_lint.txt
++        ${fastq} > ${prefix}.fq_lint.txt
+     """
+ 
+     stub:
+
+'modules/nf-core/fq/lint/tests/main.nf.test.snap' is unchanged
+Changes in 'fq/lint/tests/main.nf.test':
+--- modules/nf-core/fq/lint/tests/main.nf.test
++++ modules/nf-core/fq/lint/tests/main.nf.test
+@@ -63,4 +63,30 @@
+ 
+     }
+ 
++    test("test_fq_lint_rejects_more_than_two_fastqs") {
++        when {
++            params {
++                outdir = "$outputDir"
++            }
++            process {
++                """
++                def fq1 = file(params.modules_testdata_base_path + 'genomics/sarscov2/illumina/fastq/test_1.fastq.gz', checkIfExists: true)
++                def fq2 = file(params.modules_testdata_base_path + 'genomics/sarscov2/illumina/fastq/test_2.fastq.gz', checkIfExists: true)
++                def fq3 = file("${workDir}/test_3.fastq.gz")
++                fq3.bytes = fq1.bytes
++                input[0] = [ [ id:'test', single_end:false ],
++                             [ fq1, fq2, fq3 ]
++                           ]
++                """
++            }
++        }
++
++        then {
++            assertAll (
++                { assert process.failed }
++            )
++        }
++
++    }
++
+ }
+
+************************************************************
