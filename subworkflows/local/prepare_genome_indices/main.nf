@@ -28,7 +28,7 @@ include { STAR_GENOMEPARAMS_UPGRADE         } from '../../../modules/local/star_
 workflow PREPARE_GENOME_INDICES {
 
     take:
-    ch_fasta                 // channel: path(genome.fasta) - emitted from PREPARE_GENOME_REFERENCES
+    ch_fasta_fai             // channel: [ meta, path(genome.fasta), path(genome.fai) ] - emitted from PREPARE_GENOME_REFERENCES
     ch_gtf                   // channel: path(genome.gtf) - emitted from PREPARE_GENOME_REFERENCES
     ch_transcript_fasta      // channel: path(transcript.fasta) - emitted from PREPARE_GENOME_REFERENCES
     ch_rrna_fastas           // channel: path(rrna_fastas) - emitted from PREPARE_GENOME_REFERENCES
@@ -54,6 +54,8 @@ workflow PREPARE_GENOME_INDICES {
     star_index_legacy        // boolean: whether the supplied star_index was built with STAR 2.6.x and needs genomeParameters.txt upgraded to the 2.7.4a metadata schema
 
     main:
+    ch_fasta = ch_fasta_fai.map { _meta, fasta_file, _fai -> fasta_file }
+
     //------------------------------------------------
     // 1) Determine which indices we actually want built
     //------------------------------------------------

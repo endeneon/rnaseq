@@ -65,7 +65,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -176,7 +176,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -287,7 +287,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -398,7 +398,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -509,7 +509,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -620,7 +620,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -731,7 +731,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -842,7 +842,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -953,7 +953,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -1064,7 +1064,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -1175,7 +1175,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -1286,7 +1286,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -1397,7 +1397,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -1508,7 +1508,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -1619,7 +1619,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -1730,7 +1730,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -1841,7 +1841,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -1952,7 +1952,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -2063,7 +2063,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -2174,7 +2174,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -2285,7 +2285,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -2399,7 +2399,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -2513,7 +2513,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -2627,7 +2627,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -2741,7 +2741,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -2843,7 +2843,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -2957,7 +2957,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -3071,7 +3071,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -3185,7 +3185,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -3299,7 +3299,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -3413,7 +3413,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -3527,7 +3527,7 @@ nextflow_workflow {
                 use_sentieon_star         = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -3641,7 +3641,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -3755,7 +3755,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -3869,7 +3869,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -3983,7 +3983,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -4097,7 +4097,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -4211,7 +4211,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -4325,7 +4325,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -4439,7 +4439,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -4541,7 +4541,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel
@@ -4655,7 +4655,7 @@ nextflow_workflow {
                 use_sentieon_star        = false
                 use_parabricks_star      = false
 
-                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta  // fasta channel
+                input[0]  = PREPARE_GENOME_REFERENCES.out.fasta_fai  // fasta_fai channel
                 input[1]  = PREPARE_GENOME_REFERENCES.out.gtf  // gtf channel
                 input[2]  = PREPARE_GENOME_REFERENCES.out.transcript_fasta  // transcript_fasta channel
                 input[3]  = PREPARE_GENOME_REFERENCES.out.rrna_fastas  // rrna_fastas channel

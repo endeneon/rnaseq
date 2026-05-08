@@ -88,7 +88,7 @@ workflow NFCORE_RNASEQ {
     // SUBWORKFLOW: Build or load aligner / pseudo-aligner / filtering indices
     //
     PREPARE_GENOME_INDICES (
-        PREPARE_GENOME_REFERENCES.out.fasta,
+        PREPARE_GENOME_REFERENCES.out.fasta_fai,
         PREPARE_GENOME_REFERENCES.out.gtf,
         PREPARE_GENOME_REFERENCES.out.transcript_fasta,
         PREPARE_GENOME_REFERENCES.out.rrna_fastas,
@@ -118,8 +118,8 @@ workflow NFCORE_RNASEQ {
     if (!params.skip_alignment && !params.bam_csi_index) {
         PREPARE_GENOME_REFERENCES
             .out
-            .fai
-            .map { fai -> checkMaxContigSize(fai) }
+            .fasta_fai
+            .map { _meta, _fasta, fai -> checkMaxContigSize(fai) }
     }
 
     //
@@ -135,9 +135,8 @@ workflow NFCORE_RNASEQ {
 
     RNASEQ (
         ch_samplesheet,
-        PREPARE_GENOME_REFERENCES.out.fasta,
+        PREPARE_GENOME_REFERENCES.out.fasta_fai,
         PREPARE_GENOME_REFERENCES.out.gtf,
-        PREPARE_GENOME_REFERENCES.out.fai,
         PREPARE_GENOME_REFERENCES.out.chrom_sizes,
         PREPARE_GENOME_REFERENCES.out.gene_bed,
         PREPARE_GENOME_REFERENCES.out.transcript_fasta,

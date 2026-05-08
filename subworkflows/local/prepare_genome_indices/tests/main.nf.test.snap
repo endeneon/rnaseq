@@ -26,7 +26,7 @@
                 "[Genome, Log.out, SA, SAindex, chrLength.txt, chrName.txt, chrNameLength.txt, chrStart.txt, exonGeTrInfo.tab, exonInfo.tab, geneInfo.tab, genomeParameters.txt, sjdbInfo.txt, sjdbList.fromGTF.out.tab, sjdbList.out.tab, transcriptInfo.tab]"
             ]
         ],
-        "timestamp": "2026-05-08T13:50:04.472350163",
+        "timestamp": "2026-05-08T17:02:16.403024531",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -59,7 +59,7 @@
                 "[Genome, Log.out, SA, SAindex, chrLength.txt, chrName.txt, chrNameLength.txt, chrStart.txt, exonGeTrInfo.tab, exonInfo.tab, geneInfo.tab, genomeParameters.txt, sjdbInfo.txt, sjdbList.fromGTF.out.tab, sjdbList.out.tab, transcriptInfo.tab]"
             ]
         ],
-        "timestamp": "2026-05-08T13:47:21.912205354",
+        "timestamp": "2026-05-08T16:59:37.005709493",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -92,7 +92,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:41:49.673869351",
+        "timestamp": "2026-05-08T16:53:37.9709298",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -125,7 +125,7 @@
                 "[Genome, Log.out, SA, SAindex, chrLength.txt, chrName.txt, chrNameLength.txt, chrStart.txt, exonGeTrInfo.tab, exonInfo.tab, geneInfo.tab, genomeParameters.txt, sjdbInfo.txt, sjdbList.fromGTF.out.tab, sjdbList.out.tab, transcriptInfo.tab]"
             ]
         ],
-        "timestamp": "2026-05-08T13:46:29.133204205",
+        "timestamp": "2026-05-08T16:58:44.729805112",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -158,7 +158,7 @@
                 "[Genome, Log.out, SA, SAindex, chrLength.txt, chrName.txt, chrNameLength.txt, chrStart.txt, exonGeTrInfo.tab, exonInfo.tab, geneInfo.tab, genomeParameters.txt, sjdbInfo.txt, sjdbList.fromGTF.out.tab, sjdbList.out.tab, transcriptInfo.tab]"
             ]
         ],
-        "timestamp": "2026-05-08T13:47:50.140603288",
+        "timestamp": "2026-05-08T17:00:04.70292575",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -191,7 +191,7 @@
                 "[Genome, Log.out, SA, SAindex, chrLength.txt, chrName.txt, chrNameLength.txt, chrStart.txt, exonGeTrInfo.tab, exonInfo.tab, geneInfo.tab, genomeParameters.txt, sjdbInfo.txt, sjdbList.fromGTF.out.tab, sjdbList.out.tab, transcriptInfo.tab]"
             ]
         ],
-        "timestamp": "2026-05-08T13:50:44.419822566",
+        "timestamp": "2026-05-08T17:02:56.248948098",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -224,7 +224,7 @@
                 "[Genome, Log.out, SA, SAindex, chrLength.txt, chrName.txt, chrNameLength.txt, chrStart.txt, exonGeTrInfo.tab, exonInfo.tab, geneInfo.tab, genomeParameters.txt, sjdbInfo.txt, sjdbList.fromGTF.out.tab, sjdbList.out.tab, transcriptInfo.tab]"
             ]
         ],
-        "timestamp": "2026-05-08T13:49:51.80383676",
+        "timestamp": "2026-05-08T17:02:03.763755098",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -257,7 +257,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:42:46.344223361",
+        "timestamp": "2026-05-08T16:54:40.739678286",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -290,7 +290,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:43:13.281466652",
+        "timestamp": "2026-05-08T16:55:10.947342308",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -323,7 +323,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:45:34.214855586",
+        "timestamp": "2026-05-08T16:57:46.774777604",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -356,7 +356,7 @@
                 "[Genome, Log.out, SA, SAindex, chrLength.txt, chrName.txt, chrNameLength.txt, chrStart.txt, exonGeTrInfo.tab, exonInfo.tab, geneInfo.tab, genomeParameters.txt, sjdbInfo.txt, sjdbList.fromGTF.out.tab, sjdbList.out.tab, transcriptInfo.tab]"
             ]
         ],
-        "timestamp": "2026-05-08T13:48:58.066658812",
+        "timestamp": "2026-05-08T17:01:10.26367366",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -389,7 +389,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:42:17.117215679",
+        "timestamp": "2026-05-08T16:54:08.571607523",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -422,7 +422,7 @@
                 "[Genome, Log.out, SA, SAindex, chrLength.txt, chrName.txt, chrNameLength.txt, chrStart.txt, exonGeTrInfo.tab, exonInfo.tab, geneInfo.tab, genomeParameters.txt, sjdbInfo.txt, sjdbList.fromGTF.out.tab, sjdbList.out.tab, transcriptInfo.tab]"
             ]
         ],
-        "timestamp": "2026-05-08T13:48:04.655695761",
+        "timestamp": "2026-05-08T17:00:17.369490705",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -455,7 +455,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:41:36.149330225",
+        "timestamp": "2026-05-08T16:53:23.031343584",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -488,7 +488,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:41:22.086543847",
+        "timestamp": "2026-05-08T16:53:07.548962562",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -521,7 +521,7 @@
                 "[Genome, Log.out, SA, SAindex, chrLength.txt, chrName.txt, chrNameLength.txt, chrStart.txt, exonGeTrInfo.tab, exonInfo.tab, geneInfo.tab, genomeParameters.txt, sjdbInfo.txt, sjdbList.fromGTF.out.tab, sjdbList.out.tab, transcriptInfo.tab]"
             ]
         ],
-        "timestamp": "2026-05-08T13:49:38.695946724",
+        "timestamp": "2026-05-08T17:01:50.438644344",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -554,7 +554,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:47:08.589726428",
+        "timestamp": "2026-05-08T16:59:23.789596445",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -587,7 +587,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:43:27.278012728",
+        "timestamp": "2026-05-08T16:55:26.631372693",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -620,7 +620,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:46:02.478302967",
+        "timestamp": "2026-05-08T16:58:18.120246955",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -653,7 +653,7 @@
                 "[Genome, Log.out, SA, SAindex, chrLength.txt, chrName.txt, chrNameLength.txt, chrStart.txt, exonGeTrInfo.tab, exonInfo.tab, geneInfo.tab, genomeParameters.txt, sjdbInfo.txt, sjdbList.fromGTF.out.tab, sjdbList.out.tab, transcriptInfo.tab]"
             ]
         ],
-        "timestamp": "2026-05-08T13:46:41.841453504",
+        "timestamp": "2026-05-08T16:58:57.389389502",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -686,7 +686,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:44:53.76778826",
+        "timestamp": "2026-05-08T16:57:01.43053823",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -719,7 +719,7 @@
                 "[]"
             ]
         ],
-        "timestamp": "2026-05-08T13:44:39.373683089",
+        "timestamp": "2026-05-08T16:56:45.841997921",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -755,7 +755,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:44:25.107476236",
+        "timestamp": "2026-05-08T16:56:29.645276794",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -788,7 +788,7 @@
                 "[Genome, Log.out, SA, SAindex, chrLength.txt, chrName.txt, chrNameLength.txt, chrStart.txt, exonGeTrInfo.tab, exonInfo.tab, geneInfo.tab, genomeParameters.txt, sjdbInfo.txt, sjdbList.fromGTF.out.tab, sjdbList.out.tab, transcriptInfo.tab]"
             ]
         ],
-        "timestamp": "2026-05-08T13:48:44.758469355",
+        "timestamp": "2026-05-08T17:00:57.000925479",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -821,7 +821,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:45:07.661723034",
+        "timestamp": "2026-05-08T16:57:17.090444647",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -854,7 +854,7 @@
                 "[Genome, Log.out, SA, SAindex, chrLength.txt, chrName.txt, chrNameLength.txt, chrStart.txt, exonGeTrInfo.tab, exonInfo.tab, geneInfo.tab, genomeParameters.txt, sjdbInfo.txt, sjdbList.fromGTF.out.tab, sjdbList.out.tab, transcriptInfo.tab]"
             ]
         ],
-        "timestamp": "2026-05-08T13:48:30.554655306",
+        "timestamp": "2026-05-08T17:00:43.647299621",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -887,7 +887,7 @@
                 "[Genome, Log.out, SA, SAindex, chrLength.txt, chrName.txt, chrNameLength.txt, chrStart.txt, exonGeTrInfo.tab, exonInfo.tab, geneInfo.tab, genomeParameters.txt, sjdbInfo.txt, sjdbList.fromGTF.out.tab, sjdbList.out.tab, transcriptInfo.tab]"
             ]
         ],
-        "timestamp": "2026-05-08T13:49:25.425179978",
+        "timestamp": "2026-05-08T17:01:37.20287589",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -920,7 +920,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:42:31.56291184",
+        "timestamp": "2026-05-08T16:54:24.570077712",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -953,7 +953,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:42:03.274106915",
+        "timestamp": "2026-05-08T16:53:52.830021868",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -986,7 +986,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:43:41.312759482",
+        "timestamp": "2026-05-08T16:55:42.614329711",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -1019,7 +1019,7 @@
                 "[Genome, Log.out, SA, SAindex, chrLength.txt, chrName.txt, chrNameLength.txt, chrStart.txt, exonGeTrInfo.tab, exonInfo.tab, geneInfo.tab, genomeParameters.txt, sjdbInfo.txt, sjdbList.fromGTF.out.tab, sjdbList.out.tab, transcriptInfo.tab]"
             ]
         ],
-        "timestamp": "2026-05-08T13:47:36.220095541",
+        "timestamp": "2026-05-08T16:59:51.342775908",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -1052,7 +1052,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:43:00.407124902",
+        "timestamp": "2026-05-08T16:54:56.278957194",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -1085,7 +1085,7 @@
                 "[Genome, Log.out, SA, SAindex, chrLength.txt, chrName.txt, chrNameLength.txt, chrStart.txt, exonGeTrInfo.tab, exonInfo.tab, geneInfo.tab, genomeParameters.txt, sjdbInfo.txt, sjdbList.fromGTF.out.tab, sjdbList.out.tab, transcriptInfo.tab]"
             ]
         ],
-        "timestamp": "2026-05-08T13:46:15.896972693",
+        "timestamp": "2026-05-08T16:58:31.306532595",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -1118,7 +1118,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:44:10.058383589",
+        "timestamp": "2026-05-08T16:56:13.478721365",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -1151,7 +1151,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:43:55.462389738",
+        "timestamp": "2026-05-08T16:55:58.040964857",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -1184,7 +1184,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:50:31.047521817",
+        "timestamp": "2026-05-08T17:02:42.991293722",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -1217,7 +1217,7 @@
                 "[Genome, Log.out, SA, SAindex, chrLength.txt, chrName.txt, chrNameLength.txt, chrStart.txt, exonGeTrInfo.tab, exonInfo.tab, geneInfo.tab, genomeParameters.txt, sjdbInfo.txt, sjdbList.fromGTF.out.tab, sjdbList.out.tab, transcriptInfo.tab]"
             ]
         ],
-        "timestamp": "2026-05-08T13:48:17.983042524",
+        "timestamp": "2026-05-08T17:00:30.577448729",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -1250,7 +1250,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:45:48.245229937",
+        "timestamp": "2026-05-08T16:58:02.41183589",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -1283,7 +1283,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:45:21.03720066",
+        "timestamp": "2026-05-08T16:57:32.3777512",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
@@ -1319,7 +1319,7 @@
                 
             ]
         ],
-        "timestamp": "2026-05-08T13:49:12.034533768",
+        "timestamp": "2026-05-08T17:01:23.860915646",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "25.04.3"
