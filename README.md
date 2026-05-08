@@ -49,7 +49,7 @@
     3. [`dupRadar`](https://bioconductor.org/packages/release/bioc/html/dupRadar.html)
     4. [`Preseq`](http://smithlabresearch.org/software/preseq/) (_disabled by default; enable with `--skip_preseq false`_)
     5. [`DESeq2`](https://bioconductor.org/packages/release/bioc/html/DESeq2.html)
-    6. Or use [`RustQC`](https://github.com/seqeralabs/rustqc), a single-pass replacement for RSeQC, Qualimap, dupRadar, Preseq and SAMtools stats; enable with `--use_rustqc` (see usage docs).
+    6. Or, _experimental_: [`RustQC`](https://github.com/seqeralabs/rustqc) as a single-pass alternative to RSeQC, Qualimap, dupRadar, Preseq, and SAMtools stats (enable with `--use_rustqc`; recommend trialling on pilot data first).
     7. Contamination detection on selected screening reads (unaligned by default); _optional_
        1. [`Kraken2`](https://ccb.jhu.edu/software/kraken2/) -> [`Bracken`](https://ccb.jhu.edu/software/bracken/)
        2. [`Sylph`](https://sylph-docs.github.io/)

@@ -804,25 +804,25 @@
                     "type": "boolean",
                     "default": false,
                     "fa_icon": "fas fa-fast-forward",
-                    "description": "Skip dupRadar. Has no effect when `--use_rustqc` is enabled (RustQC supersedes this tool)."
+                    "description": "Skip dupRadar. Has no effect under `--use_rustqc` (experimental)."
                 },
                 "skip_qualimap": {
                     "type": "boolean",
                     "default": false,
                     "fa_icon": "fas fa-fast-forward",
-                    "description": "Skip Qualimap. Has no effect when `--use_rustqc` is enabled (RustQC supersedes this tool)."
+                    "description": "Skip Qualimap. Has no effect under `--use_rustqc` (experimental)."
                 },
                 "skip_rseqc": {
                     "type": "boolean",
                     "default": false,
                     "fa_icon": "fas fa-fast-forward",
-                    "description": "Skip RSeQC. Has no effect when `--use_rustqc` is enabled (RustQC supersedes this tool)."
+                    "description": "Skip RSeQC. Has no effect under `--use_rustqc` (experimental)."
                 },
                 "skip_biotype_qc": {
                     "type": "boolean",
                     "default": false,
                     "fa_icon": "fas fa-fast-forward",
-                    "description": "Skip additional featureCounts process for biotype QC. Has no effect when `--use_rustqc` is enabled (RustQC supersedes this tool)."
+                    "description": "Skip additional featureCounts process for biotype QC. Has no effect under `--use_rustqc` (experimental)."
                 },
                 "skip_deseq2_qc": {
                     "type": "boolean",
