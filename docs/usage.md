@@ -377,7 +377,7 @@ The following config was tested with the `test_full` dataset (GRCh37, 8 paired-e
 
 ```groovy
 process {
-    withName: 'PARABRICKS_.*' {
+    withName: '.*ALIGN_STAR:PARABRICKS_RNA_FQ2BAM' {
         accelerator    = { task.attempt > 1 ? 8 : 4 }
         cpus           = { 48 * task.attempt }
         memory         = { task.attempt > 1 ? 370.GB : 186.GB }
