@@ -542,7 +542,7 @@ Some bulk RNA-seq library preparation protocols capture only a 3' tag from each 
 
 Lexogen provides an example analysis workflow [on their website](https://www.lexogen.com/quantseq-data-analysis/), which includes the _ENCODE standard options_ for the [STAR aligner](<[https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf](https://github.com/alexdobin/STAR)>). In addition, Lexogen also decreases the tolerance for mismatches and clips poly(A) tails. To apply these settings, add the following parameters when running the pipeline:
 
-```
+```bash
 --extra_star_align_args "--outFilterMismatchNoverLmax 0.1 --clip3pAdapterSeq AAAAAAAA"
 ```
 
@@ -553,7 +553,7 @@ Note that many of the ENCODE standard STAR options (e.g. `--outFilterMultimapNma
 [Salmon's default quantitation algorithm](https://www.nature.com/articles/nmeth.4197) takes into account transcript length.
 Because 3' tag protocols do not capture full transcripts, this feature needs to be deactivated by specifying:
 
-```
+```bash
 --extra_salmon_quant_args "--noLengthCorrection"
 ```
 
@@ -561,7 +561,7 @@ Because 3' tag protocols do not capture full transcripts, this feature needs to 
 
 If unique molecular identifiers were used to prepare the library, add the following arguments as well, to extract the UMIs and deduplicated alignments:
 
-```
+```bash
 --with_umi
 --umitools_extract_method regex
 --umitools_bc_pattern "^(?P<umi_1>.{6})(?P<discard_1>.{4}).*"
@@ -581,7 +581,7 @@ When supplying reference files as discussed below, it is important to be consist
 
 The minimum reference genome requirements for this pipeline are a FASTA file (genome and/ or transcriptome) and GTF file, all other files required to run the pipeline can be generated from these files. For example, the latest reference files for human can be derived from Ensembl like:
 
-```
+```bash
 latest_release=$(curl -s 'http://rest.ensembl.org/info/software?content-type=application/json' | grep -o '"release":[0-9]*' | cut -d: -f2)
 wget -L ftp://ftp.ensembl.org/pub/release-${latest_release}/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa.gz
 wget -L ftp://ftp.ensembl.org/pub/release-${latest_release}/gtf/homo_sapiens/Homo_sapiens.GRCh38.${latest_release}.gtf.gz
