@@ -14,7 +14,7 @@ process RSEM_PREPAREREFERENCE {
     output:
     path "rsem"           , emit: index
     path "*transcripts.fa", emit: transcript_fasta
-    path "versions.yml"   , emit: versions
+    tuple val("${task.process}"), val('rsem'), eval('rsem-calculate-expression --version | sed -e "s/Current version: RSEM v//g"'), topic: versions, emit: versions_rsem
 
     when:
     task.ext.when == null || task.ext.when
@@ -24,7 +24,7 @@ process RSEM_PREPAREREFERENCE {
     def args2 = task.ext.args2 ?: ''
     def args_list = args.tokenize()
     if (args_list.contains('--star')) {
-        args_list.removeIf { it.contains('--star') }
+        args_list.removeIf { arg -> arg.contains('--star') }
         def memory = task.memory ? "--limitGenomeGenerateRAM ${task.memory.toBytes() - 100000000}" : ''
         """
         STAR \\
@@ -44,12 +44,6 @@ process RSEM_PREPAREREFERENCE {
             rsem/genome
 
         cp rsem/genome.transcripts.fa .
-
-        cat <<-END_VERSIONS > versions.yml
-        "${task.process}":
-            rsem: \$(rsem-calculate-expression --version | sed -e "s/Current version: RSEM v//g")
-            star: \$(STAR --version | sed -e "s/STAR_//g")
-        END_VERSIONS
         """
     } else {
         """
@@ -61,23 +55,11 @@ process RSEM_PREPAREREFERENCE {
             rsem/genome
 
         cp rsem/genome.transcripts.fa .
-
-        cat <<-END_VERSIONS > versions.yml
-        "${task.process}":
-            rsem: \$(rsem-calculate-expression --version | sed -e "s/Current version: RSEM v//g")
-            star: \$(STAR --version | sed -e "s/STAR_//g")
-        END_VERSIONS
         """
     }
 
     stub:
     """
     touch genome.transcripts.fa
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        rsem: \$(rsem-calculate-expression --version | sed -e "s/Current version: RSEM v//g")
-        star: \$(STAR --version | sed -e "s/STAR_//g")
-    END_VERSIONS
     """
 }

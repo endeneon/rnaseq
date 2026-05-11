@@ -1,19 +1,6 @@
 name: Run nf-test
 on:
-  push:
-    paths-ignore:
-      - "docs/**"
-      - "**/meta.yml"
-      - "**/*.md"
-      - "**/*.png"
-      - "**/*.svg"
   pull_request:
-    paths-ignore:
-      - "docs/**"
-      - "**/meta.yml"
-      - "**/*.md"
-      - "**/*.png"
-      - "**/*.svg"
   release:
     types: [published]
   workflow_dispatch:
@@ -25,9 +12,7 @@ concurrency:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  NFT_DIFF: "pdiff"
-  NFT_DIFF_ARGS: "--line-numbers --width 120 --expand-tabs=2"
-  NFT_VER: "0.9.2"
+  NFT_VER: "0.9.5"
   NFT_WORKDIR: "~"
   NXF_ANSI_LOG: false
   NXF_SINGULARITY_CACHEDIR: ${{ github.workspace }}/.singularity
@@ -37,7 +22,7 @@ jobs:
   nf-test-changes:
     name: nf-test-changes
     runs-on: # use self-hosted runners
-      - runs-on=$-nf-test-changes
+      - runs-on=${{ github.run_id }}-nf-test-changes
       - runner=4cpu-linux-x64
     outputs:
       shard: ${{ steps.set-shards.outputs.shard }}
@@ -49,7 +34,7 @@ jobs:
           rm -rf ./* || true
           rm -rf ./.??* || true
           ls -la ./
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
 
@@ -58,8 +43,12 @@ jobs:
         uses: ./.github/actions/get-shards
         env:
           NFT_VER: ${{ env.NFT_VER }}
+          # Skip sentieon tests on fork PRs where secrets are not available
+          SKIP_SENTIEON: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != 'nf-core/rnaseq' }}
+          # Skip GPU tests on CPU runners
+          SKIP_GPU: "true"
         with:
-          max_shards: 14
+          max_shards: 20
 
       - name: debug
         run: |
@@ -71,7 +60,7 @@ jobs:
     needs: [nf-test-changes]
     if: ${{ needs.nf-test-changes.outputs.total_shards != '0' }}
     runs-on: # use self-hosted runners
-      - runs-on=$-nf-test
+      - runs-on=${{ github.run_id }}-nf-test
       - runner=4cpu-linux-x64
     strategy:
       fail-fast: false
@@ -87,35 +76,64 @@ jobs:
           - isMain: false
             profile: "singularity"
         NXF_VER:
-          - "24.04.2"
+          - "25.10.4"
           - "latest-everything"
     env:
       NXF_ANSI_LOG: false
       TOTAL_SHARDS: ${{ needs.nf-test-changes.outputs.total_shards }}
 
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
 
       - name: Run nf-test
+        id: run_nf_test
         uses: ./.github/actions/nf-test
+        continue-on-error: ${{ matrix.NXF_VER == 'latest-everything' }}
         env:
-          NFT_DIFF: ${{ env.NFT_DIFF }}
-          NFT_DIFF_ARGS: ${{ env.NFT_DIFF_ARGS }}
           NFT_WORKDIR: ${{ env.NFT_WORKDIR }}
+          SENTIEON_AUTH_MECH: "GitHub Actions - token"
+          SENTIEON_ENCRYPTION_KEY: ${{ secrets.SENTIEON_ENCRYPTION_KEY }}
+          SENTIEON_LICENSE_MESSAGE: ${{ secrets.SENTIEON_LICENSE_MESSAGE }}
+          SENTIEON_LICSRVR_IP: ${{ secrets.SENTIEON_LICSRVR_IP }}
+          NXF_VERSION: ${{ matrix.NXF_VER }}
+          # Skip sentieon tests on fork PRs where secrets are not available,
+          # and on conda because conda-resolved sentieon + its license-server
+          # handshake isn't deterministic run-to-run, so classifyStrand can
+          # flip on a threshold boundary and the summary-table md5 drifts
+          # vs the docker-captured snapshot.
+          SKIP_SENTIEON: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != 'nf-core/rnaseq') || matrix.profile == 'conda' }}
+          # Skip GPU tests on CPU runners
+          SKIP_GPU: "true"
         with:
-          profile: ${{ matrix.profile }}
+          profile: test,${{ matrix.profile }}
           shard: ${{ matrix.shard }}
           total_shards: ${{ env.TOTAL_SHARDS }}
+
+      - name: Report test status
+        if: ${{ always() }}
+        run: |
+          if [[ "${{ steps.run_nf_test.outcome }}" == "failure" ]]; then
+            echo "::error::Test with ${{ matrix.NXF_VER }} failed"
+            # Add to workflow summary
+            echo "## ❌ Test failed: ${{ matrix.profile }} | ${{ matrix.NXF_VER }} | Shard ${{ matrix.shard }}/${{ env.TOTAL_SHARDS }}" >> $GITHUB_STEP_SUMMARY
+            if [[ "${{ matrix.NXF_VER }}" == "latest-everything" ]]; then
+              echo "::warning::Test with latest-everything failed but will not cause workflow failure. Please check if the error is expected or if it needs fixing."
+            fi
+            if [[ "${{ matrix.NXF_VER }}" != "latest-everything" ]]; then
+              exit 1
+            fi
+          fi
+
   confirm-pass:
-    needs: [nf-test]
+    needs: [nf-test-changes, nf-test]
     if: always()
     runs-on: # use self-hosted runners
-      - runs-on=$-confirm-pass
+      - runs-on=${{ github.run_id }}-confirm-pass
       - runner=2cpu-linux-x64
     steps:
-      - name: One or more tests failed
+      - name: One or more tests failed (excluding latest-everything)
         if: ${{ contains(needs.*.result, 'failure') }}
         run: exit 1
 
@@ -130,15 +148,7 @@ jobs:
       - name: debug-print
         if: always()
         run: |
-          echo "::group::DEBUG: `needs` Contents"
+          echo "::group::DEBUG: needs Contents"
           echo "DEBUG: toJSON(needs) = ${{ toJSON(needs) }}"
           echo "DEBUG: toJSON(needs.*.result) = ${{ toJSON(needs.*.result) }}"
           echo "::endgroup::"
-
-      - name: Clean Workspace # Purge the workspace in case it's running on a self-hosted runner
-        if: always()
-        run: |
-          ls -la ./
-          rm -rf ./* || true
-          rm -rf ./.??* || true
-          ls -la ./

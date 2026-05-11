@@ -3,6 +3,18 @@ nextflow_workflow {
     name "Test Workflow BAM_SORT_STATS_SAMTOOLS"
     script "../main.nf"
     workflow "BAM_SORT_STATS_SAMTOOLS"
+    tag "subworkflows"
+    tag "subworkflows_nfcore"
+    tag "subworkflows/bam_sort_stats_samtools"
+    tag "bam_sort_stats_samtools"
+    tag "subworkflows/bam_stats_samtools"
+    tag "bam_stats_samtools"
+    tag "samtools"
+    tag "samtools/index"
+    tag "samtools/sort"
+    tag "samtools/stats"
+    tag "samtools/idxstats"
+    tag "samtools/flagstat"
 
     test("test_bam_sort_stats_samtools_single_end") {
 
@@ -15,7 +27,8 @@ nextflow_workflow {
                 ])
                 input[1] = Channel.of([
                     [ id:'genome' ],
-                    file(params.modules_testdata_base_path + 'genomics/sarscov2/genome/genome.fasta', checkIfExists: true)
+                    file(params.modules_testdata_base_path + 'genomics/sarscov2/genome/genome.fasta', checkIfExists: true),
+                    file(params.modules_testdata_base_path + 'genomics/sarscov2/genome/genome.fasta.fai', checkIfExists: true)
                 ])
                 """
             }
@@ -25,12 +38,11 @@ nextflow_workflow {
             assertAll(
                 { assert workflow.success},
                 { assert workflow.out.bam.get(0).get(1) ==~ ".*.bam"},
-                { assert workflow.out.bai.get(0).get(1) ==~ ".*.bai"},
+                { assert workflow.out.index.get(0).get(1) ==~ ".*.bai"},
                 { assert snapshot(
                     workflow.out.flagstat,
                     workflow.out.idxstats,
-                    workflow.out.stats,
-                    workflow.out.versions).match() }
+                    workflow.out.stats).match() }
             )
         }
     }
@@ -46,7 +58,8 @@ nextflow_workflow {
                 ])
                 input[1] = Channel.of([
                     [ id:'genome' ],
-                    file(params.modules_testdata_base_path + 'genomics/sarscov2/genome/genome.fasta', checkIfExists: true)
+                    file(params.modules_testdata_base_path + 'genomics/sarscov2/genome/genome.fasta', checkIfExists: true),
+                    file(params.modules_testdata_base_path + 'genomics/sarscov2/genome/genome.fasta.fai', checkIfExists: true)
                 ])
                 """
             }
@@ -56,12 +69,11 @@ nextflow_workflow {
             assertAll(
                 { assert workflow.success},
                 { assert workflow.out.bam.get(0).get(1) ==~ ".*.bam"},
-                { assert workflow.out.bai.get(0).get(1) ==~ ".*.bai"},
+                { assert workflow.out.index.get(0).get(1) ==~ ".*.bai"},
                 { assert snapshot(
                     workflow.out.flagstat,
                     workflow.out.idxstats,
-                    workflow.out.stats,
-                    workflow.out.versions).match() }
+                    workflow.out.stats).match() }
             )
         }
     }
@@ -79,7 +91,8 @@ nextflow_workflow {
                 ])
                 input[1] = Channel.of([
                     [ id:'genome' ],
-                    file(params.modules_testdata_base_path + 'genomics/sarscov2/genome/genome.fasta', checkIfExists: true)
+                    file(params.modules_testdata_base_path + 'genomics/sarscov2/genome/genome.fasta', checkIfExists: true),
+                    file(params.modules_testdata_base_path + 'genomics/sarscov2/genome/genome.fasta.fai', checkIfExists: true)
                 ])
                 """
             }
@@ -106,7 +119,8 @@ nextflow_workflow {
                 ])
                 input[1] = Channel.of([
                     [ id:'genome' ],
-                    file(params.modules_testdata_base_path + 'genomics/sarscov2/genome/genome.fasta', checkIfExists: true)
+                    file(params.modules_testdata_base_path + 'genomics/sarscov2/genome/genome.fasta', checkIfExists: true),
+                    file(params.modules_testdata_base_path + 'genomics/sarscov2/genome/genome.fasta.fai', checkIfExists: true)
                 ])
                 """
             }

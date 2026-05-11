@@ -12,6 +12,11 @@ nextflow_pipeline {
                 pseudo_aligner = 'kallisto'
                 skip_qc = true
                 skip_alignment = true
+                // Disable spike-ins since we don't have a kallisto_index with spike-ins.
+                // Must also disable transcript_fasta because the test profile's transcriptome
+                // was generated with spike-ins - we need the pipeline to regenerate it.
+                additional_fasta = null
+                transcript_fasta = null
             }
         }
 
@@ -25,14 +30,25 @@ nextflow_pipeline {
                 { assert snapshot(
                     // Number of successful tasks
                     workflow.trace.succeeded().size(),
-                    // pipeline versions.yml file for multiqc from which Nextflow version is removed because we tests pipelines on multiple Nextflow versions
-                    removeNextflowVersion("$outputDir/pipeline_info/nf_core_rnaseq_software_mqc_versions.yml"),
+                    // pipeline versions.yml file for multiqc from which Nextflow and pipeline versions are removed (all from the workflow key)
+                    removeFromYamlMap("$outputDir/pipeline_info/nf_core_rnaseq_software_mqc_versions.yml", "Workflow"),
                     // All stable path name, with a relative path
                     stable_name,
                     // All files with stable contents
                     stable_path
                 ).match() }
             )
+        }
+
+        cleanup {
+            // Only prune/delete on CI - keeping local VM state intact prevents
+            // cross-test launchDir wipes that break nf-test snapshot walks.
+            if (System.getenv("CI") == "true") {
+                if (System.getenv("NFT_PROFILE")?.contains("docker")) {
+                    "docker system prune -a -f --volumes".execute()
+                }
+                new File("${launchDir}").deleteDir()
+            }
         }
     }
 
@@ -46,6 +62,11 @@ nextflow_pipeline {
                 pseudo_aligner = 'kallisto'
                 skip_qc = true
                 skip_alignment = true
+                // Disable spike-ins since we don't have a kallisto_index with spike-ins.
+                // Must also disable transcript_fasta because the test profile's transcriptome
+                // was generated with spike-ins - we need the pipeline to regenerate it.
+                additional_fasta = null
+                transcript_fasta = null
             }
         }
 
@@ -59,14 +80,25 @@ nextflow_pipeline {
                 { assert snapshot(
                     // Number of successful tasks
                     workflow.trace.succeeded().size(),
-                    // pipeline versions.yml file for multiqc from which Nextflow version is removed because we tests pipelines on multiple Nextflow versions
-                    removeNextflowVersion("$outputDir/pipeline_info/nf_core_rnaseq_software_mqc_versions.yml"),
+                    // pipeline versions.yml file for multiqc from which Nextflow and pipeline versions are removed (all from the workflow key)
+                    removeFromYamlMap("$outputDir/pipeline_info/nf_core_rnaseq_software_mqc_versions.yml", "Workflow"),
                     // All stable path name, with a relative path
                     stable_name,
                     // All files with stable contents
                     stable_path
                 ).match() }
             )
+        }
+
+        cleanup {
+            // Only prune/delete on CI - keeping local VM state intact prevents
+            // cross-test launchDir wipes that break nf-test snapshot walks.
+            if (System.getenv("CI") == "true") {
+                if (System.getenv("NFT_PROFILE")?.contains("docker")) {
+                    "docker system prune -a -f --volumes".execute()
+                }
+                new File("${launchDir}").deleteDir()
+            }
         }
     }
 }

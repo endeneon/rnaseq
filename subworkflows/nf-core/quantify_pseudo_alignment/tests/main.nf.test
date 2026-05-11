@@ -5,7 +5,18 @@ nextflow_workflow {
     config "./nextflow.config"
     workflow "QUANTIFY_PSEUDO_ALIGNMENT"
 
+    tag "subworkflows"
+    tag "subworkflows_nfcore"
+    tag "subworkflows/quantify_pseudo_alignment"
 
+    tag "salmon/index"
+    tag "salmon/quant"
+    tag "kallisto/index"
+    tag "kallisto/quant"
+    tag "subworkflows/quant_tximport_summarizedexperiment"
+    tag "custom/tx2gene"
+    tag "tximeta/tximport"
+    tag "summarizedexperiment/summarizedexperiment"
 
     test("salmon") {
 
@@ -45,6 +56,7 @@ nextflow_workflow {
                 input[9]  = 'A'
                 input[10] = null
                 input[11] = null
+                input[12] = false
                 """
             }
         }
@@ -59,11 +71,10 @@ nextflow_workflow {
                         workflow.out.counts_gene_length_scaled,
                         workflow.out.lengths_gene,
                         workflow.out.lengths_transcript,
-                        workflow.out.merged_counts_transcript,
-                        workflow.out.merged_tpm_transcript,
+                        workflow.out.counts_transcript,
                         workflow.out.tpm_gene,
                         workflow.out.tpm_transcript,
-                        workflow.out.versions
+                        workflow.out.tx2gene_augmented
                     ).match()
                 }
             )
@@ -110,6 +121,7 @@ nextflow_workflow {
                 input[9]  = null
                 input[10] = []
                 input[11] = []
+                input[12] = false
                 """
             }
         }
@@ -126,7 +138,7 @@ nextflow_workflow {
                         workflow.out.lengths_transcript,
                         workflow.out.tpm_gene,
                         workflow.out.tpm_transcript,
-                        workflow.out.versions
+                        workflow.out.tx2gene_augmented
                     ).match()
                 }
             )
@@ -173,6 +185,7 @@ nextflow_workflow {
                 input[9]  = 'A'
                 input[10] = null
                 input[11] = null
+                input[12] = false
                 """
             }
         }
@@ -227,6 +240,7 @@ nextflow_workflow {
                 input[9]  = null
                 input[10] = []
                 input[11] = []
+                input[12] = false
                 """
             }
         }

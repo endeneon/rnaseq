@@ -5,8 +5,8 @@ process DESEQ2_QC {
     // This was to avoid the pipeline failing due to package conflicts whilst creating the environment when using -profile conda
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/mulled-v2-8849acf39a43cdd6c839a369a74c0adc823e2f91:ab110436faf952a33575c64dd74615a84011450b-0' :
-        'biocontainers/mulled-v2-8849acf39a43cdd6c839a369a74c0adc823e2f91:ab110436faf952a33575c64dd74615a84011450b-0' }"
+        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/1d/1d425b12748ce54c44c01a535a1ef5867a6e16cbf62c43151012e893444b1673/data' :
+        'community.wave.seqera.io/library/r-base_r-optparse_r-ggplot2_r-rcolorbrewer_pruned:9e75394d0bc21987' }"
 
     input:
     path counts
@@ -22,7 +22,8 @@ process DESEQ2_QC {
     path "*sample.dists_mqc.tsv", optional:true, emit: dists_multiqc
     path "*.log"                , optional:true, emit: log
     path "size_factors"         , optional:true, emit: size_factors
-    path "versions.yml"         , emit: versions
+    tuple val("${task.process}"), val('r-base'), eval("Rscript -e 'cat(as.character(getRversion()))'"), emit: versions_r_base, topic: versions
+    tuple val("${task.process}"), val('bioconductor-deseq2'), eval("Rscript -e \"library(DESeq2); cat(as.character(packageVersion('DESeq2')))\""), emit: versions_deseq2, topic: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -54,12 +55,6 @@ process DESEQ2_QC {
         cat clustering_header.tmp *.sample.dists.txt > ${label_lower}.sample.dists_mqc.tsv
         rm clustering_header.tmp
     fi
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        r-base: \$(echo \$(R --version 2>&1) | sed 's/^.*R version //; s/ .*\$//')
-        bioconductor-deseq2: \$(Rscript -e "library(DESeq2); cat(as.character(packageVersion('DESeq2')))")
-    END_VERSIONS
     """
 
     stub:
@@ -77,15 +72,11 @@ process DESEQ2_QC {
 
     mkdir size_factors
     touch size_factors/${prefix}.size_factors.RData
+    # One per-sample size_factors file per data column in $counts; the
+    # module test snaps these names so the stub must mirror real-run output.
     for i in `head $counts -n 1 | cut -f3-`;
     do
         touch size_factors/\${i}.size_factors.RData
     done
-
-    cat <<-END_VERSIONS >versions.yml
-    "${task.process}":
-        r-base: \$(echo \$(R --version 2>&1) | sed 's/^.*R version //; s/ .*\$//')
-        bioconductor-deseq2: \$(Rscript -e "library(DESeq2); cat(as.character(packageVersion('DESeq2')))")
-    END_VERSIONS
     """
 }
