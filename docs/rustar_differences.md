@@ -174,10 +174,11 @@ upstream (Nextflow / nf-schema), separately from rustar.
 
 ## Tracked upstream
 
-- **Paired-end transcriptome BAM missing mate fields** ->
-  `docs/rustar_investigation_wt_rep2.md` has the ready-to-file issue
-  body. Severity: high (blocks paired-end Salmon TPMs from being
-  trustworthy).
+- **Paired-end transcriptome BAM missing mate fields** -> filed as
+  [scverse/rustar-aligner#22](https://github.com/scverse/rustar-aligner/issues/22);
+  full evidence + reproducer in
+  [`rustar_investigation_wt_rep2.md`](rustar_investigation_wt_rep2.md).
+  Severity: high (blocks paired-end Salmon TPMs from being trustworthy).
 - **Annotated splice-junction count is zero in `Log.final.out`** despite
   `--sjdbGTFfile` + `--twopassMode Basic`. Secondary; mapping rate
   impact is < 0.25 pp so it's not driving the visible TPM divergence,

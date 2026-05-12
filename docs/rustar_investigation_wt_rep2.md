@@ -2,6 +2,8 @@
 
 Date of investigation: 2026-05-12. Pipeline branch: `rustar-aligner` (nf-core/rnaseq PR #1855). Aligner under test: `rustar-aligner` v0.1.0 from https://github.com/scverse/rustar-aligner. Reference aligner: STAR 2.7.11b.
 
+> **Status:** filed upstream as [scverse/rustar-aligner#22](https://github.com/scverse/rustar-aligner/issues/22).
+
 ## TL;DR
 
 In nf-core/rnaseq `-profile test,docker`, gene-level Salmon TPMs correlate >= 0.995 between STAR and rustar for four of five samples, but drop to **Pearson r = 0.985040 on WT_REP2** while gene-level NumReads stays at r = 0.999842. The split between very-high read agreement and noticeably-lower TPM agreement points at Salmon's effective-length / fragment-length-distribution stage, not at the alignments themselves.
