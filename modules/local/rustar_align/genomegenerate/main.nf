@@ -18,7 +18,6 @@ process RUSTAR_GENOMEGENERATE {
     script:
     def args        = task.ext.args ?: ''
     def args_list   = args.tokenize()
-    def memory      = task.memory ? "--limitGenomeGenerateRAM ${task.memory.toBytes() - 100000000}" : ''
     def include_gtf = gtf ? "--sjdbGTFfile $gtf" : ''
     // Heuristic mirrors STAR_GENOMEGENERATE's gawk/samtools-faidx pipeline, but
     // computed in Groovy so we don't need samtools+gawk in the rustar container.
@@ -40,7 +39,6 @@ process RUSTAR_GENOMEGENERATE {
         $include_gtf \\
         --runThreadN $task.cpus \\
         $auto_sa_index \\
-        $memory \\
         $args
     """
 

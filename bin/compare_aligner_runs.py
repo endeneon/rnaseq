@@ -64,18 +64,29 @@ def collect_log_finals(outdir: Path) -> dict:
 
 
 def read_tsv_matrix(path: Path) -> tuple[list[str], list[str], list[list[float]]]:
-    """Read a salmon merged TSV (first column = id, rest = sample values)."""
+    """Read a salmon merged TSV. First column is the feature id; any extra
+    leading non-numeric columns (e.g. gene_name) are discarded; the remaining
+    columns are sample values."""
     with path.open() as fh:
         reader = csv.reader(fh, delimiter="\t")
         header = next(reader)
-        samples = header[1:]
-        ids = []
-        rows = []
+        first_data = next(reader)
+        sample_start = 1
+        for i in range(1, len(first_data)):
+            try:
+                float(first_data[i])
+                sample_start = i
+                break
+            except ValueError:
+                continue
+        samples = header[sample_start:]
+        ids = [first_data[0]]
+        rows = [[float(v) for v in first_data[sample_start:]]]
         for row in reader:
             if not row:
                 continue
             ids.append(row[0])
-            rows.append([float(v) for v in row[1:]])
+            rows.append([float(v) for v in row[sample_start:]])
     return samples, ids, rows
 
 
@@ -146,7 +157,9 @@ def trace_summary(trace_path: Path, process_filter: set[str]) -> dict:
     by_process = {}
     for row in rows:
         # Nextflow trace process names look like "NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN (sample)".
-        base = row.get("process", "").split(":")[-1].split(" ")[0]
+        # The trace file column is "name" in modern Nextflow; older versions used "process".
+        name = row.get("name") or row.get("process", "")
+        base = name.split(":")[-1].split(" ")[0]
         if base not in process_filter:
             continue
         by_process.setdefault(base, []).append(row)
