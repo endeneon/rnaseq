@@ -52,15 +52,23 @@ on its yeast 10 k-read benchmark.
 
 `gene_counts` (raw `NumReads`) is essentially identical across both
 runs. `gene_tpm` is also very close on three samples but diverges
-materially on `WT_REP2` (and to a lesser extent `RAP1_IAA_30M_REP1`,
-`WT_REP1`). TPM depends on per-gene effective length, which makes it
-much more sensitive to which transcripts a multi-mapper gets assigned
-to than the raw count matrix is.
+materially on `WT_REP2`, with `RAP1_IAA_30M_REP1` and `WT_REP1` showing
+the same effect at smaller magnitude. The two single-end samples
+(`RAP1_UNINDUCED_REP1/2`) are clean.
 
-A separate deep-dive on `WT_REP2` is in
-`docs/rustar_investigation_wt_rep2.md` (added once the diagnostic agent
-finishes); the intent there is to produce something we can hand
-upstream as an issue.
+This is **not** sample-specific. See
+[`rustar_investigation_wt_rep2.md`](rustar_investigation_wt_rep2.md)
+for the deep dive - short version: rustar v0.1.0's
+`Aligned.toTranscriptome.out.bam` doesn't populate mate-pair fields
+(`RNEXT` / `PNEXT` / `TLEN`) or set the proper-pair flag on paired-end
+records, so Salmon can't infer a fragment-length distribution and
+falls back to its default prior (mean 250, SD 25). That distorts
+`EffectiveLength` for short transcripts, which is what we see in TPM.
+The hit is bigger on `WT_REP2` because of how its mapped reads
+distribute across short vs long transcripts.
+
+This is the headline bug to file upstream once the report is in
+shape; everything below is secondary.
 
 ## Module-level workarounds we had to add
 
@@ -158,10 +166,20 @@ upstream (Nextflow / nf-schema), separately from rustar.
 - Full-size run on the `test_full` samplesheet (GRCh37, larger reads) to
   produce performance and concordance numbers that map to user
   expectations. The test-profile numbers above are not load-bearing.
-- The `WT_REP2` TPM divergence root cause - see
-  `docs/rustar_investigation_wt_rep2.md`.
 - Whether the `--limitGenomeGenerateRAM` omission matters at human-genome
   scale.
 - Whether rustar's `--quantTranscriptomeSAMoutput BanSingleEnd` matches
-  STAR's interpretation byte-for-byte. We pass it for `star_salmon`
-  alignment; correctness here drives Salmon TPMs.
+  STAR's interpretation byte-for-byte. Almost certainly fine, but worth
+  a glance once the paired-end mate-field bug is fixed.
+
+## Tracked upstream
+
+- **Paired-end transcriptome BAM missing mate fields** ->
+  `docs/rustar_investigation_wt_rep2.md` has the ready-to-file issue
+  body. Severity: high (blocks paired-end Salmon TPMs from being
+  trustworthy).
+- **Annotated splice-junction count is zero in `Log.final.out`** despite
+  `--sjdbGTFfile` + `--twopassMode Basic`. Secondary; mapping rate
+  impact is < 0.25 pp so it's not driving the visible TPM divergence,
+  but suggests the pass-1 SJ database isn't being primed from the GTF.
+  File separately once the BAM fix lands.
